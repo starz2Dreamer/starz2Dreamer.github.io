@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <title>Homepage | Flask server</title>
+    <style>
+        body {background:#888}
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to the main page</h1>
+    <p>Good morning, user <strong>{{userName}}</strong>!</p>
+    <h3>This web page is intended to run with Flask server</h3>
+    <dl>
+        <dt>Dynamic information</dt>
+        <dd>{ { } }</dd>
+        <dd>pass the user's name from back-end server to front-end website.</dd>
+        <dd>Treat this like a JS string literal, allows u to input python value within an HTML statement</dd>
+    </dl>
+    
+    <code><blockquote>
+        {% for x in range(5) %}
+            <p>This is a python code. The value of x is {{x}}</p>
+        {% endfor %}
+    </blockquote></code>
+    <dl>
+        <dt>Write python code within the html file</dt>
+        <dd><b>{ %</b> Python code goes here! <b>% }</b></dd>
+    </dl>
+    <p>Created on June 14, 2023</p>
+</body>
