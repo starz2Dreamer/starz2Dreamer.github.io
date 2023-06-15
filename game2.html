@@ -1,0 +1,155 @@
+﻿<html>
+<head>
+<title>Tính nhanh</title>
+<link rel="icon" type="imagae/png" href="resource/blue_icon.png"/>
+<style>
+body{background-size: cover}
+#game_play{background: rgba(0,0,0,.6)}
+#my_log{width: 1000px; height: 90px; background: #ccc; display: block; margin: 20px auto 0px; font-family: "Courier New"; overflow: auto;}
+#question{border: 1px solid #fff; padding: 10px 30px; margin-bottom:40px; font-size: 45px}
+#ans_list{list-style-type:none; padding:0}
+#ans_list li{
+	cursor:pointer;
+	border: 1px solid #000;
+	font-size: 30px;
+	display:block;
+	padding: 10px 50px 10px 20px;
+	margin: 20px 0px
+}
+</style>
+</head>
+
+<body background="resource/background2.jpg">
+
+<table width="1002px" height="500px" align="center">
+<tr>
+
+<td width="150px" valign="top">
+<h1 id="score_label">Score: 0</h1>
+<h1 id="mistake_label">Miss: 0</h1>
+<p><button id="pause_btn" onclick="pause(this)">Pause</button></p>
+</td>
+
+<td id="game_play" valign="top" style="padding: 20px">
+<h1 id="question">???</h1>
+<ul id="ans_list">
+<li>1</li>
+<li>1</li>
+<li>1</li>
+<li>1</li>
+</ul>
+<p id="timer_label">0</p>
+</td>
+
+</tr></table>
+
+<div id="my_log"></div>
+
+<script>
+var answer;
+var score=0;
+var miss=0;
+
+addAttByQuery("#ans_list li","onclick","checkAnswer(this)");
+setGame();
+
+function createQuestion(){
+	var list=document.querySelectorAll("#ans_list li");
+	var answerList=[];
+	var result;
+	var random=randomNumber(0,list.length-1); // length-1 to equal to loop execute times and arrays
+	for(i=0;i<list.length;i++){ //execute list.length times
+		num1=randomNumber(1,20);
+		num2=randomNumber(1,20);
+		result=num1+num2;
+		if(i==random){
+			setText("question",num1+" + "+num2+" = "); // create question
+			answer=result;
+		}
+		list[i].innerHTML=result;
+		answerList[i]=result;
+		for(as=0;as<answerList.length-1;as++){ // prevent same answers
+			if(result==answerList[as]){
+				i--;
+			}
+		}
+	}
+}
+function checkAnswer(choice){
+	getAns=choice.innerHTML;
+	if(getAns==answer){
+		log("Correct!");
+		score++;
+	} else {
+		if(getAns===undefined){
+			log("Time's up! "+document.getElementById("question").innerHTML+answer);
+		} else {
+			log(getAns+" is incorrect! "+document.getElementById("question").innerHTML+answer);
+		}
+		miss++;
+	}
+	setText("score_label","Score: "+score);
+	setText("mistake_label","Miss: "+miss);
+	setGame();
+}
+
+var timer;
+function setTime(time){
+	setText("timer_label",time);
+	if(time>3){
+		checkAnswer("TimeUp"); // undifined variable
+	} else {
+		time=eval(time)+1;
+		timer=setTimeout("setTime("+time+")",1000);
+	}
+}
+function pause(swit){
+	if(swit.innerHTML=="Pause"){
+		clearTimeout(timer);
+		swit.innerHTML="Resume";
+	} else {
+		setTime(eval(getText('timer_label')));
+		swit.innerHTML="Pause";
+	}
+}
+
+function setGame(){
+	clearTimeout(timer);
+	createQuestion();
+	setTime(1);
+	setText("pause_btn","Pause");
+}
+
+
+function playSound(url){
+	var audio = new Audio(url);
+	audio.play();
+}
+function addAttByQuery(queryName,att,value){
+	ab = document.querySelectorAll(queryName);
+	for(i=0;i<ab.length;i++){
+		ab[i].setAttribute(att,value);
+	}
+}
+function setText(id,text){
+	a=document.getElementById(id);
+	a.innerHTML=text;
+}
+function getText(id){
+	return document.getElementById(id).innerHTML;
+}
+function log(text){
+	a=document.getElementById("my_log");
+	a.innerHTML+=text+"<br>";
+}
+function randomNumber(min, max) {
+	return Math.floor(Math.random() * (max - min+1)) + min;
+}
+</script>
+
+
+
+
+
+</body>
+</html>

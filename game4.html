@@ -1,0 +1,66 @@
+﻿<html>
+<head>
+<title>Piano</title>
+<link rel="icon" type="image/png" href="resource/blue_icon.png"/>
+<script type="text/javascript" src="resource/rmieScript.js"></script>
+<style>
+body{background:url("resource/background2.jpg"); background-size:cover;}
+</style>
+</head>
+
+<body>
+<div id="background_controller">
+<p style="color:white" id="shown">0</p>
+<button onclick="num++;changeBG()">+</button>
+<button onclick="num--;changeBG()">-</button>
+<button onclick="num=0;changeBG()">Original</button>
+</div>
+
+<script>
+playNote("a","a");
+playNote("s","b");
+playNote("d","bb");
+playNote("f","c");
+playNote("g","cc");
+playNote("h","d");
+playNote("j","e");
+playNote("k","eb");
+playNote("w","f");
+playNote("e","ff");
+playNote("r","g");
+playNote("t","gg");
+
+playNote("q","e");
+playNote("u","ff");
+playNote("i","bb");
+playNote("y","a");
+playNote("o","b");
+playNote("p","cc");
+
+function playNote(letter,note){
+	document.addEventListener("keydown",function(event){
+	key=event.key;
+		if(key.toLowerCase()==letter.toLowerCase()){
+			playSound("../stored audio/piano/"+note+".wav");
+		}
+	});
+}
+
+num=1;
+function changeBG(){
+	if(num==0){
+		document.body.style="background: url('resource/background2.jpg'); background-size: cover";
+	} else {
+		num=wrap(num,1,7);
+		document.body.style.background="url('pattern/pattern"+num+".png')";
+	}
+	shown.innerHTML=num;
+}
+
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+	<title>Password Generator</title>
+	<style>
+		body{color:#888}
+		#pwform{padding:10px 20px; width: 700px;}
+		#symbol_list{list-style-type:none;margin:0px;}
+		#pw_text{width:800px;word-wrap:break-word}
+	</style>
+	<script type="text/javascript" src="resource/rmieScript.js"></script>
+</head>
+
+<body bgcolor="#222">
+	<form id="pwform" name="pwform" method="post">
+	<p>Password length: <input type="text" name="pwlength" maxlength="4" value="8" size="5"/></p>
+		<fieldset>
+			<legend>Characteristic</legend>
+				<ul id="symbol_list">
+					<li><label><input type="checkbox" value="lower" checked/> Include lowercase (a b c d e f g etc.)</lable></li>
+					<li><label><input type="checkbox" value="upper" checked/> Include uppercase (A B C D E F G etc.)</lable></li>
+					<li><label><input type="checkbox" value="number" checked/> Include numbers (1 2 3 4 5 6 etc.)</lable></li>
+					<li><label><input type="checkbox" value="symbol" checked/> Include symbols (@ $ % ! # etc.)</lable></li>
+					<li><label><input type="checkbox" value="other"/> Include ambigious characters. ({ } [ ] ( ) / \ ' " ` ~ , ; : . < > )</lable></li>
+				</ul>
+		</fieldset>
+		<p>Repeated characters: <label><input type="radio" name="repeat_letter" value="yes" checked="yes"/>Yes</lable>
+		&nbsp&nbsp&nbsp&nbsp<label><input type="radio" name="repeat_letter" value="no" disabled/>No</lable></p>
+		<p><button onclick="return generate();">Generate</button> <input value="Reset" type="reset"></p>
+		<p>Your password is:<br></p>
+		<div id="pw_text"></div>
+	</form>
+	
+	<script>
+		pw = "";
+		letters=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+		lettersUpper=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+		numbers=["0","1","2","3","4","5","6","7","8","9"];
+		symbols=["!","@","#","$","%","&","*","+","-","=","?","~","_"];
+		non=["`","(",")","\\","/","|","{","}","[","]",":",";","\'","\"",",",".","<",">"];
+		masterArray=[letters,lettersUpper,numbers,symbols,non];
+		pwArray=[letters,lettersUpper,numbers]; //serve no purpose whatsoever
+		
+		function randomCharacter(){
+			var type = randomNumber(0,pwArray.length-1);
+			var word = randomNumber(0,pwArray[type].length-1);
+			return pwArray[type][word];
+		}
+		function createPw(num){
+			for(i=0;i<num;i++){
+				pw+=randomCharacter();
+			}
+			setText("pw_text",pw); // Move to another function if possible
+		}
+		function formCheck(){
+			//pwArray=[]; have been moved to reset()
+			var list=document.querySelectorAll("#symbol_list input"); // get attribute checked from input
+			for(i=0;i<list.length;i++){
+				if(list[i].checked===true){
+					pwArray.splice(0,0,masterArray[i]); //append array, not use pwArray[i] because will create holes, or pwArray[pwArray.length] because the length won't change after append
+				}
+			}
+		}
+		function reset(){
+			pw="";
+			pwArray=[];
+		}
+		function generate(){
+			reset();
+			formCheck();
+			var times = pwform.pwlength.value;
+			if(isNaN(times)||times>9999){
+				alert("F*ck you!!!");
+			} else {
+				createPw(times);
+			}
+			return false; // prevent action from the form
+		}
+	</script>
+	
+	
+</body></html>
