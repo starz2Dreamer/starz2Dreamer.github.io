@@ -1,30 +1,75 @@
-<!DOCTYPE html>
-<head>
-    <title>Homepage | Flask server</title>
-    <style>
-        body {background:#888}
-    </style>
-</head>
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<title>Home | Relearn center</title>
+		<meta charset="UTF-8">
+		<base target="_blank">
+		<link rel="stylesheet" href="resource/theme7.css">
+	</head>
+	
+	<body>
+		<div class="info-bar drop-shadow">
+			<div id="site-name"><a href="https://github.com/starz2Dreamer">Github</a></div>
+			<div id="header-navi"></div>
+		</div>
+		
+		
+		<div class="wrapper drop-shadow">
+			<header>
+				<div id="blog-img-container"><img id="#blog-img" src="resource/sky_wallpaper.jpg" width="100%"/></div>
+				<div class="navi">
+					<ul>
+						<li><a href="https://github.com/starz2Dreamer">Github</a></li>
+						<li><a href="#">My art(IG)</a></li>
+					</ul>
+				</div>
+			</header>
+			
+			<div id="main-content">
+				<main>
+					<article id="introduction">
+						<img src="resource/starz2.jpg" width="150" style="float: left; clear:both" />
+						<p>Hello, my name is Minh, but I'd like to go by Starz2. An artist that's love coding. Graduated with a Bachelor of Art Degree. I self-taught myself how to do coding. This is where I show my apps and games ;)</p>
+					</article>
+					
+					<article class="gallery">
+						<h1>File Gallery</h1>
+						<dl>
+							<a href="app1.html"><dt>Password Generator</dt></a>
+								<dd>A quick way to generate password/passcode.</dd>
+							
+							<a href="game1.html"><dt>Color pick</dt></a>
+								<dd>Pick the square that has different color compared the remaining ones. Based on the difficulty, the diffence is barely noticable with bare eyes.</dd>
+							
+							<a href="game2.html"><dt>Quickmath</dt></a>
+								<dd>Do you want to be able to quickly calculate a number in your head? This game is perfect for you! With a three second timer, a correct answer need to be given. Great for thrill-lover.</br>
+								<i>The timer is under the fourth choice.</i>
+								</dd>
+							<a href="game4.html"><dt>Background Changer</dt></a>
+								<dd>Press a random keyboard and the piano music will played. Watch as the background changed ;)</dd>
+						</dl>
+					</article>
+					
+					<article class="record">
+						<h1>Activity log | Last update June 2023</h1>
+						<p>mm/dd/yyyy</p>
+						<p>06/15/2023: Created a porfolio website.</p>
+					</article>
+					
+				</main>
+			</div><!--End of main content-->
+			
+		</div>
 
-<body>
-    <h1>Welcome to the main page</h1>
-    <p>Good morning, user <strong>{{userName}}</strong>!</p>
-    <h3>This web page is intended to run with Flask server</h3>
-    <dl>
-        <dt>Dynamic information</dt>
-        <dd>{ { } }</dd>
-        <dd>pass the user's name from back-end server to front-end website.</dd>
-        <dd>Treat this like a JS string literal, allows u to input python value within an HTML statement</dd>
-    </dl>
-    
-    <code><blockquote>
-        {% for x in range(5) %}
-            <p>This is a python code. The value of x is {{x}}</p>
-        {% endfor %}
-    </blockquote></code>
-    <dl>
-        <dt>Write python code within the html file</dt>
-        <dd><b>{ %</b> Python code goes here! <b>% }</b></dd>
-    </dl>
-    <p>Created on June 14, 2023</p>
-</body>
+	<!--******************************************************
+		© 2022-23 Starz2 Designed. All right reserved.	
+	******************************************************-->
+
+
+
+	</body>
+
+
+
+
+</html>

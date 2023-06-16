@@ -1,0 +1,167 @@
+﻿<html>
+<head>
+<title>Color Game</title>
+<link rel="icon" type="image/png" href="resource/starz2_icon.png"/>
+<style>
+table{color:#b90}
+#game_play{background: rgba(0,0,0,.8)}
+#my_log{width: 1000px; height: 90px; background: #ccc; display: block; margin: 20px auto 0px; font-family: "Courier New"; overflow: auto;}
+.color_button{width:50px; height:50px; background: white; margin:10px; float: left;}
+.color_button:hover{cursor:pointer}
+
+</style>
+</head>
+
+
+
+<body background="resource/sky_bg.png" style="background-size: cover">
+
+
+<table width="1002px" height="500px" align="center">
+<tr>
+<td width="150px" valign="top"><h1 id="score_label">Score: 0</h1>
+<h1 id="mistake_label">Miss: 0</h1>
+<p><select id="difficulty">
+<option>Easy</option>
+<option>Normal</option>
+<option>Hard</option>
+<option>Extreme</option>
+</select></p>
+<select id="amounts">
+<option>4 squares</option>
+<option>12 squares</option>
+<option>24 squares</option>
+<option>48 squares</option>
+<option>84 squares</option>
+</select>
+</td>
+
+<td id="game_play" valign="top">
+<div class="color_button"></div>
+<div class="color_button"></div>
+<div class="color_button"></div>
+<div class="color_button"></div>
+</td>
+
+</tr></table>
+
+<div id="my_log"></div>
+
+
+<script>
+var randomBtn;
+var inc=20;
+var score=0;
+var miss=0;
+addSquares(4);
+addAttribute();
+setGame();
+document.getElementById("difficulty").addEventListener("change",function(){
+	i=difficulty.selectedIndex;
+	if(i==0){
+		inc=20;
+	} else if(i==1){
+		inc=10;
+	} else if(i==2){
+		inc=5;
+	} else if(i==3){
+		inc=1;
+	}
+	reset();
+});
+document.getElementById("amounts").addEventListener("change",function(){
+	check=amounts[amounts.selectedIndex].text.toString();
+	var boxNum="";
+	for(i=0;i<check.length;i++){
+		a=check.substring(i,i+1);
+		if(!(isNaN(a))){
+			boxNum+=a;
+		}
+	}
+	addSquares(boxNum);
+	addAttribute();
+	reset();
+});
+function setGame(){
+	var R=randomNumber(0,235);
+	var G=randomNumber(0,235);
+	var B=randomNumber(0,235);
+	var color="rgb("+R+","+G+","+B+")";
+	var color2="rgb("+(R+inc)+","+(G+inc)+","+(B+inc)+")";
+	var color3="rgb("+(R-inc)+","+(G-inc)+","+(B-inc)+")";
+	var colorSelect=[color2,color3];
+	var boxNum = document.querySelectorAll(".color_button");
+	randomBtn="button"+randomNumber(1,boxNum.length);
+	addAtt(".color_button","style","background-color: "+color);
+	if (inc==20){
+		arry=0;
+	} else {
+		arry=randomNumber(0,1);
+	}
+	document.getElementById(randomBtn).style="background-color: "+colorSelect[arry];
+}
+function addAttribute(){
+	ab = document.querySelectorAll(".color_button");
+	for(i=0;i<ab.length;i++){
+		var a="button"+(i+1);
+		ab[i].setAttribute("id",a);
+		ab[i].setAttribute("onclick","checkColor('"+a+"')");
+	}
+}
+function addSquares(times){
+	setText("game_play","");
+	for(i=0;i<times;i++){
+		square=document.createElement("div");
+		square.className="color_button";
+		document.getElementById("game_play").appendChild(square);
+	}
+}
+function checkColor(buttonId){
+	if(buttonId==randomBtn){
+		log("Correct");
+		score++;
+	} else {
+		document.getElementById(randomBtn).style.boxShadow="0px 0px 0px 3px white";
+		alert("False\nThe correct button is "+randomBtn);
+		log("False");
+		miss++;
+	}
+	setGame();
+	setText("score_label","Score: "+score);
+	setText("mistake_label","Miss: "+miss);
+}
+function reset(){
+	score=0;
+	miss=0;
+	setText("score_label","Score: "+score);
+	setText("mistake_label","Miss: "+miss);
+	setText("my_log","");
+	setGame();
+}
+function randomNumber(min, max) {
+	return Math.floor(Math.random() * (max - min+1)) + min;
+}
+function addAtt(name,att,text){
+	ab = document.querySelectorAll(name);
+	for(i=0;i<ab.length;i++){
+		ab[i].setAttribute(att,text);
+	}
+}
+function log(txt){
+	document.getElementById("my_log").innerHTML+=txt+"<br>";
+}
+function setText(id,txt){
+	document.getElementById(id).innerHTML=txt;
+}
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

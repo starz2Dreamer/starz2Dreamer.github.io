@@ -1,0 +1,81 @@
+﻿<html>
+<head>
+	<title>Piano</title>
+	<link rel="icon" type="image/png" href="resource/starz2_icon.png"/>
+	<style>
+		body{background:url("resource/sky_bg.png"); background-size:cover;}
+	</style>
+	<script type="text/javascript" src="resource/rmieScript.js"></script>
+</head>
+
+<body>
+	<div id="background_controller">
+		<p style="color:white" id="shown">0</p>
+		<button onclick="num++;changeBG(num)">+</button>
+		<button onclick="num--;changeBG(num)">-</button>
+		<button onclick="changeBG(0)">Original</button>
+	</div>
+
+	<script>
+		playNote("a","a");
+		playNote("s","b");
+		playNote("d","bb");
+		playNote("f","c");
+		playNote("g","cc");
+		playNote("h","d");
+		playNote("j","e");
+		playNote("k","eb");
+		playNote("w","f");
+		playNote("e","ff");
+		playNote("r","g");
+		playNote("t","gg");
+
+		playNote("q","e");
+		playNote("u","ff");
+		playNote("i","bb");
+		playNote("y","a");
+		playNote("o","b");
+		playNote("p","cc");
+		
+
+		function playNote(letter,note){
+			document.addEventListener("keydown",function(event){
+			key=event.key;
+				if(key.toLowerCase()==letter.toLowerCase()){
+					playSound("piano/"+note+".wav");
+					changeBG(randomNumber(1,8))
+				}
+			});
+		}
+
+		num=0;
+		function changeBG(num){
+			console.log(num)
+			if(num==0){
+				document.body.style="background: url('resource/sky_bg.png'); background-size: cover";
+			} else {
+				num=wrap(num,1,8);
+				document.body.style.background="url('pattern/pattern"+num+".png')";
+			}
+			shown.innerHTML=num;
+		}
+		
+		function wrap(num,min,max){
+			if(num<0){ //Check if num a negative number
+				num=num*-1;
+			}
+			num = (num-min) % (max - min + 1); //Get the remainder
+			if(num<0){
+				return max + 1 +num;
+			} else {
+				return min+num;
+			}
+		}
+		
+	</script>
+
+
+
+
+</body>
+</html>
